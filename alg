@@ -69,3 +69,84 @@ def gcd(a, b):
 
 a, b = map(int, input().split())
 print(gcd(a, b))
+
+
+
+
+
+
+
+
+
+
+# Algorithms for Assignment
+
+# 1. Recursion Algorithms
+# Factorial
+def factorial(n):
+    if n == 0 or n == 1:
+        return 1
+    return n * factorial(n - 1)
+
+# Fibonacci (Recursive with Memoization)
+def fibonacci_memo(n, memo={}):
+    if n in memo:
+        return memo[n]
+    if n <= 1:
+        return n
+    memo[n] = fibonacci_memo(n - 1, memo) + fibonacci_memo(n - 2, memo)
+    return memo[n]
+
+# 2. Tower of Hanoi
+def hanoi(n, source, auxiliary, target):
+    if n == 1:
+        print(f"Move disk 1 from {source} to {target}")
+        return
+    hanoi(n - 1, source, target, auxiliary)
+    print(f"Move disk {n} from {source} to {target}")
+    hanoi(n - 1, auxiliary, source, target)
+
+# 3. Dynamic Programming
+# Fibonacci (DP)
+def fibonacci_dp(n):
+    dp = [0, 1] + [0] * (n - 1)
+    for i in range(2, n + 1):
+        dp[i] = dp[i - 1] + dp[i - 2]
+    return dp[n]
+
+# Longest Common Subsequence (LCS)
+def lcs(X, Y):
+    m, n = len(X), len(Y)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if X[i - 1] == Y[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + 1
+            else:
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+    return dp[m][n]
+
+# 4. Graph Traversal
+from collections import defaultdict, deque
+
+# Depth-First Search (DFS)
+def dfs(graph, start, visited=None):
+    if visited is None:
+        visited = set()
+    visited.add(start)
+    print(start, end=' ')
+    for neighbor in graph[start]:
+        if neighbor not in visited:
+            dfs(graph, neighbor, visited)
+
+# Breadth-First Search (BFS)
+def bfs(graph, start):
+    visited = set([start])
+    queue = deque([start])
+    while queue:
+        vertex = queue.popleft()
+        print(vertex, end=' ')
+        for neighbor in graph[vertex]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+                queue.append(neighbor)
